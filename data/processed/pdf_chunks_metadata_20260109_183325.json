@@ -1,0 +1,14 @@
+{
+  "pdf_path": "data/mobydick.pdf",
+  "doc_id": "mobydick",
+  "config": {
+    "max_tokens": 512,
+    "overlap_tokens": 64,
+    "min_tokens": 128,
+    "min_heading_score": 0.4
+  },
+  "statistics": {
+    "num_pages": 344,
+    "num_sections": 22,
+    "num_chunks": 709,
+    "total_tokens": 
