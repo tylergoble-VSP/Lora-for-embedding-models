@@ -1,0 +1,21 @@
+{
+  "pdf_path": "data/mobydick.pdf",
+  "doc_id": "mobydick",
+  "config": {
+    "max_tokens": 512,
+    "overlap_tokens": 64,
+    "min_tokens": 128,
+    "min_heading_score": 0.4
+  },
+  "statistics": {
+    "num_pages": 344,
+    "num_sections": 22,
+    "num_chunks": 709,
+    "total_tokens": 334063,
+    "avg_tokens_per_chunk": 471.17489421720734,
+    "min_tokens": 1,
+    "median_tokens": 490.0,
+    "max_tokens": 583
+  },
+  "parquet_path": "data/processed/pdf_chunks_20260113_165016.parquet"
+}
