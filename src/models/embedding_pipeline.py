@@ -5,6 +5,7 @@ Purpose:
     tokenization, forward pass, mean pooling, and normalization.
 """
 
+import os  # Standard library env access for HF_TOKEN
 import torch  # PyTorch for tensor operations and model inference
 import torch.nn.functional as F  # Functional operations like normalization
 from transformers import AutoTokenizer, AutoModel  # Hugging Face model loading
@@ -29,8 +30,10 @@ def load_embeddinggemma_model(model_name: str = "google/embeddinggemma-300m", de
 
     # Load tokenizer and model (this will download weights if not cached)
     # Note: Make sure you've accepted the model license on Hugging Face
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModel.from_pretrained(model_name)
+    # If HF_TOKEN is set in the environment, it is used for gated models.
+    hf_token = os.getenv("HF_TOKEN")
+    tokenizer = AutoTokenizer.from_pretrained(model_name, token=hf_token)
+    model = AutoModel.from_pretrained(model_name, token=hf_token)
 
     # Move model to the specified device
     model.to(device)

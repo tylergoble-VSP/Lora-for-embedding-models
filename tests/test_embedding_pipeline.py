@@ -4,7 +4,11 @@ Unit tests for embedding pipeline functionality.
 
 import pytest  # pytest is the testing framework used for this repo
 import torch  # PyTorch for tensor operations
-from src.models.embedding_pipeline import embed_texts, compute_cosine_similarity
+from src.models.embedding_pipeline import (  # from src/models/embedding_pipeline.py
+    compute_cosine_similarity,
+    embed_texts,
+    load_embeddinggemma_model,
+)
 
 
 def test_embed_texts_single_string():
@@ -80,4 +84,43 @@ def test_compute_cosine_similarity_symmetric():
 
     # Check symmetry: sim[i,j] == sim[j,i]
     assert torch.allclose(sim_matrix, sim_matrix.T)
+
+
+def test_load_embeddinggemma_model_passes_hf_token(monkeypatch: pytest.MonkeyPatch):
+    """
+    Ensure the HF_TOKEN env var is forwarded to HF from_pretrained calls.
+    """
+
+    captured_tokens = {}
+
+    def fake_tokenizer_from_pretrained(model_name: str, token: str = None):
+        captured_tokens["tokenizer"] = token
+        return object()
+
+    def fake_model_from_pretrained(model_name: str, token: str = None):
+        captured_tokens["model"] = token
+
+        class FakeModel:
+            def to(self, device: str):
+                return self
+
+            def eval(self):
+                return None
+
+        return FakeModel()
+
+    monkeypatch.setenv("HF_TOKEN", "test-hf-token")
+    monkeypatch.setattr(
+        "src.models.embedding_pipeline.AutoTokenizer.from_pretrained",
+        fake_tokenizer_from_pretrained,
+    )
+    monkeypatch.setattr(
+        "src.models.embedding_pipeline.AutoModel.from_pretrained",
+        fake_model_from_pretrained,
+    )
+
+    load_embeddinggemma_model(model_name="test-model", device="cpu")
+
+    assert captured_tokens["tokenizer"] == "test-hf-token"
+    assert captured_tokens["model"] == "test-hf-token"
 

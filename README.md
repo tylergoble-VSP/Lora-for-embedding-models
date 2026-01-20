@@ -74,6 +74,8 @@ The EmbeddingGemma model is gated and requires accepting the license:
    huggingface-cli login
    ```
    Or set the `HF_TOKEN` environment variable (see `.env.example`)
+   - The embedding loader reads `HF_TOKEN` and forwards it to Hugging Face
+     `from_pretrained` calls for gated models.
 
 ### 4. Verify Setup
 
