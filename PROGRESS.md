@@ -12,6 +12,8 @@
 ## Decisions
 - Use `HF_TOKEN` from the environment and pass it into Hugging Face
   `from_pretrained` calls to avoid hardcoding secrets in source.
+- Add `01a_Environment_Variables.ipynb` to validate HF auth and downloads
+  without using the Hugging Face CLI.
 
 ## Backlog
 - Replace hardcoded model IDs with typed config + YAML

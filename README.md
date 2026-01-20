@@ -20,6 +20,7 @@ EmbeddingGemma is a state-of-the-art 300M parameter multilingual embedding model
 ```
 Lora-for-embedding-models/
 ├── 01_Setup_Environment.ipynb          # Environment setup and verification
+├── 01a_Environment_Variables.ipynb     # HF_TOKEN auth + download test (no CLI)
 ├── 02_Load_Data_Explore.ipynb         # Dataset loading and exploration
 ├── 03_Model_Setup_Embeddings.ipynb    # Model loading and embedding pipeline
 ├── 04_LoRA_Configuration.ipynb        # LoRA setup and configuration
@@ -70,16 +71,19 @@ The EmbeddingGemma model is gated and requires accepting the license:
 1. Create a Hugging Face account: https://huggingface.co/join
 2. Accept the model license: https://huggingface.co/google/embeddinggemma-300m
 3. Login:
-   ```bash
-   huggingface-cli login
-   ```
-   Or set the `HF_TOKEN` environment variable (see `.env.example`)
+   - Preferred on restricted networks: set the `HF_TOKEN` environment variable
+     (see `01a_Environment_Variables.ipynb`).
+   - If allowed, you can also use the CLI:
+     ```bash
+     huggingface-cli login
+     ```
    - The embedding loader reads `HF_TOKEN` and forwards it to Hugging Face
      `from_pretrained` calls for gated models.
 
 ### 4. Verify Setup
 
-Run `01_Setup_Environment.ipynb` to verify your environment is configured correctly.
+Run `01_Setup_Environment.ipynb` and `01a_Environment_Variables.ipynb` to verify your
+environment and Hugging Face access.
 
 ## Usage
 
@@ -88,13 +92,14 @@ Run `01_Setup_Environment.ipynb` to verify your environment is configured correc
 Follow the notebooks in numerical order:
 
 1. **01_Setup_Environment.ipynb**: Verify environment and dependencies
-2. **02_Load_Data_Explore.ipynb**: Load and explore your dataset
-3. **03_Model_Setup_Embeddings.ipynb**: Load model and test embedding pipeline
-4. **04_LoRA_Configuration.ipynb**: Configure LoRA adapters
-5. **05_Fine_Tuning_Training.ipynb**: Train the model
-6. **06_Evaluation_Analysis.ipynb**: Evaluate model performance
-7. **07_Visualization_Embeddings.ipynb**: Visualize embeddings in 2D
-8. **08_Semantic_Search_Demo.ipynb**: Use model for semantic search
+2. **01a_Environment_Variables.ipynb**: Validate HF_TOKEN auth and downloads (no CLI)
+3. **02_Load_Data_Explore.ipynb**: Load and explore your dataset
+4. **03_Model_Setup_Embeddings.ipynb**: Load model and test embedding pipeline
+5. **04_LoRA_Configuration.ipynb**: Configure LoRA adapters
+6. **05_Fine_Tuning_Training.ipynb**: Train the model
+7. **06_Evaluation_Analysis.ipynb**: Evaluate model performance
+8. **07_Visualization_Embeddings.ipynb**: Visualize embeddings in 2D
+9. **08_Semantic_Search_Demo.ipynb**: Use model for semantic search
 
 ### CLI Training
 
